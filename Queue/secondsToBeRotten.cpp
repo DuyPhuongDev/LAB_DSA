@@ -6,7 +6,9 @@
 using namespace std;
 
 bool isValid(int i, int j, vector<vector<int>> grid){
-    return i>-1 && j>-1 && i<grid.size() && j<grid[0].size();
+    int row = grid.size();
+    int col = grid[0].size();
+    return i>-1 && j>-1 && i<row && j<col;
 }
 
 int secondsToBeRotten(vector<vector<int>>& grid) {
