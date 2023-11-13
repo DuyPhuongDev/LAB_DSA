@@ -14,7 +14,12 @@ private:
     int diameter(Node* root);
     int height(Node* root);
     int countTwoChildrenNode(Node* root, int &count);
+    string preOrder(Node* root);
+    string postOrder(Node* root);
+    string inOrder(Node* root);
+    int sumOfLeafs(Node* root);
 public:
+    
     BinaryTree() : root(nullptr) {}
     ~BinaryTree()
     {
@@ -64,10 +69,10 @@ public:
         countTwoChildrenNode(root,count);
         return count;
     }
-    int getHeight();
-    string preOrder();
-    string postOrder();
-    string inOrder();
+    string preOrder(){return preOrder(root);}
+    string postOrder(){return postOrder(root);};
+    string inOrder(){return inOrder(root);};
+    int sumOfLeafs(){return sumOfLeafs(root);}
 };
 
 template<class K, class V>
@@ -124,15 +129,43 @@ int BinaryTree<K,V>::countTwoChildrenNode(Node* root, int &count){
     return left?left:right;
 }
 
+template<class K, class V>
+string BinaryTree<K,V>::preOrder(Node* root){
+    if(!root) return "\0";
+
+    return to_string(root->value) + " " + preOrder(root->pLeft) + preOrder(root->pRight);
+}
+
+template<class K, class V>
+string BinaryTree<K, V>::inOrder(Node* root){
+    if(!root) return "\0";
+
+    return inOrder(root->pLeft) + to_string(root->value)+" "+inOrder(root->pRight);
+}
+
+template<class K, class V>
+string BinaryTree<K, V>::postOrder(Node* root){
+    if(!root) return "\0";
+
+    return postOrder(root->pLeft) + postOrder(root->pRight) + to_string(root->value) + " ";
+}
+
+template<class K, class V>
+int BinaryTree<K, V>::sumOfLeafs(Node* root){
+    if(!root) return 0;
+    if(!root->pLeft && !root->pRight) return root->value;
+    int left = sumOfLeafs(root->pLeft);
+    int right = sumOfLeafs(root->pRight);
+
+    return left+right;
+}
+
 int main(){
 	
-	
 BinaryTree<int, int> binaryTree;
-binaryTree.addNode("",2, 4);
-binaryTree.addNode("L",3, 6);
-binaryTree.addNode("R",5, 9);
-binaryTree.addNode("LL",4, 10);
-binaryTree.addNode("LR",6, 2);
-cout << binaryTree.countTwoChildrenNode();
+binaryTree.addNode("", 2, 4);
+binaryTree.addNode("L", 3, 6);
+binaryTree.addNode("R", 5, 9);
+cout << binaryTree.sumOfLeafs();
      return 0;
 }
