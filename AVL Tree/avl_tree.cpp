@@ -335,6 +335,30 @@ public:
         bool shorter = false;
         root = AVL_delete(root,value,shorter);
     }
+    void inorder(Node* root){
+        if(!root) return;
+        inorder(root->pLeft);
+        cout<<root->data<<" ";
+        inorder(root->pRight);
+    }
+
+    void printInorder(){
+        //TODO
+        inorder(root);
+    }
+
+    Node* searchNode(Node* root, const T&value){
+        if(!root) return nullptr;
+        if(root->data==value) return root;
+        if(root->data>value) return searchNode(root->pLeft, value);
+        return searchNode(root->pRight, value);
+    }
+
+    bool search(const T &value){
+        //TODO
+        if(searchNode(root,value)) return true;
+        return false;
+    }
     class Node
     {
     private:
